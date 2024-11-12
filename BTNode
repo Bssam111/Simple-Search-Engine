@@ -1,0 +1,19 @@
+public class BTNode<T> {  
+public T data;  
+public BTNode<T> left,right;  
+  
+//node without left and right  
+public BTNode(T val) {  
+    data=val;  
+    left=right=null;  
+}  
+  
+//node with left and right  
+  
+public BTNode(T val, BTNode<T> l, BTNode<T> r) {  
+    data=val;  
+    left=l;  
+    right=r;  
+}  
+
+}  
