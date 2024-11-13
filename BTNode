@@ -1,19 +1,21 @@
-public class BTNode<T> {  
-public T data;  
-public BTNode<T> left,right;  
+public class BSTNode<T> {  
+    public int key;  
+    public T data;  
+    public BSTNode<T> left,right;  
   
-//node without left and right  
-public BTNode(T val) {  
-    data=val;  
-    left=right=null;  
-}  
+    //node without left and right  
+    public BSTNode(int k,T val) {  
+        key=k;  
+        data=val;  
+        left=right=null;  
+    }  
   
-//node with left and right  
+    //node with left right  
   
-public BTNode(T val, BTNode<T> l, BTNode<T> r) {  
-    data=val;  
-    left=l;  
-    right=r;  
-}  
-
+    public BSTNode(T val, BSTNode<T> l, BSTNode<T> r) {  
+        key=k;  
+        data=val;  
+        left=l;  
+        right=r;  
+    }  
 }  
