@@ -1,35 +1,18 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Index {
-public LinkedList<Document> document;
+public LinkedList<Document> documents;
 
 public Index(String pathname) {
-    document=new LinkedList<Document>();
-    LoadDocument(pathname);
-    // Reading r=new Reading();
-    // r.load("dataset.csv", document);
+    documents=new LinkedList<Document>();
+    load_document(pathname);
 }
 
-public void DisplayDocument(int docnum){
-document.findFirst();
-for(int i=0;i<docnum;i++)
-document.findNext();
-document.retrieve().displayWords();
-
-}
-public LinkedList<String> DocumentWord(int docnum){
-    document.findFirst();
-    for(int i=0;i<docnum;i++)
-    document.findNext();
-    return document.retrieve().words;
-}
-
-
-
- private void LoadDocument(String pathname){
+ private void load_document(String pathname){ 
         File f=new File(pathname);
-        
         try{
             Scanner in=new Scanner(f);
             String line=in.nextLine();
@@ -40,29 +23,15 @@ public LinkedList<String> DocumentWord(int docnum){
                     }
                     //System.out.println(line);
                     int id=Integer.parseInt(line.substring(0,line.indexOf(',')).trim());
-                     Document tmp=new Document(id);
+                     Document document=new Document(id);
                     String content=line.substring(line.indexOf(',')+2,line.lastIndexOf('.')).trim().toLowerCase();
                     content=content.replace(".", "");content=content.replace(",", "");
                     String[] arrContent=content.split(" ");
                   for(String s:arrContent){
-                    tmp.words.insert(s);
+                    document.words.insert(s);
                   }
-                  File f1=new File("stop.txt");
-                  Scanner StopWordsScanner=new Scanner(f1);
-                
-                  while(StopWordsScanner.hasNext()){
-                    String stop=StopWordsScanner.next().trim();
-                    tmp.words.findFirst();
-                    while(!tmp.words.last()){
-                        if(stop.equals(tmp.words.retrieve()))
-                            tmp.words.remove();
-                            if(tmp.words.last()) break;
-                            tmp.words.findNext();
-                    }
-                    if(stop==tmp.words.retrieve())
-                    tmp.words.remove();
-                  }
-                   document.insert(tmp);
+                   delete_stop_words(document);
+                   documents.insert(document);
                 }
                 
             }catch(Exception e){
@@ -70,4 +39,21 @@ public LinkedList<String> DocumentWord(int docnum){
         }
         
     }
+public void delete_stop_words(Document d) throws FileNotFoundException { // to delete the words that in File stop.txt
+    File f=new File("stop.txt");  // from here we
+    Scanner StopWordsScanner=new Scanner(f);
+  
+    while(StopWordsScanner.hasNext()){
+      String stop=StopWordsScanner.next().trim();
+      d.words.findFirst();
+      while(!d.words.last()){
+          if(stop.equals(d.words.retrieve()))
+              d.words.remove();
+              if(d.words.last()) break;
+              d.words.findNext();
+      }
+      if(stop==d.words.retrieve())
+      d.words.remove();
+    }
+}    
 }

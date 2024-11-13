@@ -8,90 +8,96 @@ public LinkedList<Word> words;
 public Invertedindex(Index index) {
         words=new LinkedList<Word>();
         this.index=index;
-        invertedindex();
-    }
-    public void displayword(int index){
-        words.findFirst();
-    for(int i=0;i<index;i++)
-        words.findNext();
-    System.out.println(words.retrieve().word);
-    words.retrieve().showIndex();
+        invert_index();
     }
 
-public void SearchForWord(String str){
+public void display(){
+    words.findFirst();
+    while(!words.last()){
+        System.out.print(words.retrieve().word+" [");
+        words.retrieve().print_indexs();
+        System.out.println("]");
+        words.findNext();
+    }
+    System.out.print(words.retrieve().word+" [");
+    words.retrieve().print_indexs();
+    System.out.println("]");
+    words.findNext();
+}
+
+public void search_for_word(String str){
     words.findFirst();
     while(!words.last()){
         if(str.equals(words.retrieve().word))
-            words.retrieve().showIndex();
+            words.retrieve().print_indexs();
              words.findNext();
     } 
         if(str.equals(words.retrieve().word))
-            words.retrieve().showIndex();
+            words.retrieve().print_indexs();
             
     }
 
 
-public void invertedindex(){
-    index.document.findFirst();
+public void invert_index(){ // this method will convert every word in the class document that is saved in the list of documents to word class and add the index in the list and add the word object in the word list
+    index.documents.findFirst();
     LinkedList<String> tmp=null;
-   while(!index.document.last()){
-     tmp= index.document.retrieve().words;
+   while(!index.documents.last()){
+     tmp= index.documents.retrieve().words;
         tmp.findFirst();
         while(!tmp.last()){
-            Word w=FindOrCreateNewWord(tmp.retrieve());
+            Word w=find_or_create_new_Word(tmp.retrieve());
             if(w==null){
                 w=new Word(tmp.retrieve());
                 words.insert(w);
             }
-            w.index.insert(index.document.retrieve().id);
+            w.add_index(index.documents.retrieve().id);
             
      
             tmp.findNext();
         }
-        Word w=FindOrCreateNewWord(tmp.retrieve());
+        Word w=find_or_create_new_Word(tmp.retrieve());
         if(w==null){
             w=new Word(tmp.retrieve());
             words.insert(w);
         }
-            w.index.insert(index.document.retrieve().id); 
+            w.add_index(index.documents.retrieve().id); 
            
           
-            index.document.findNext();
+            index.documents.findNext();
         }
-        tmp= index.document.retrieve().words;
+        tmp= index.documents.retrieve().words;
         tmp.findFirst();
         while(!tmp.last()){
-            Word w=FindOrCreateNewWord(tmp.retrieve());
+            Word w=find_or_create_new_Word(tmp.retrieve());
             if(w==null){
                 w=new Word(tmp.retrieve());
                 words.insert(w);
             }
-            w.index.insert(index.document.retrieve().id);
-           
+            w.add_index(index.documents.retrieve().id);
             tmp.findNext();
         }
-        Word w=FindOrCreateNewWord(tmp.retrieve());
+        Word w=find_or_create_new_Word(tmp.retrieve());
         if(w==null){
             w=new Word(tmp.retrieve());
             words.insert(w);
         }
-            w.index.insert(index.document.retrieve().id); 
+            w.add_index(index.documents.retrieve().id); 
             
     
-            index.document.findNext();
+            index.documents.findNext();
     }
-    public Word FindOrCreateNewWord(String word){
-        if(!words.empty()){
-            words.findFirst();
-            while(!words.last()){
-                if(words.retrieve().word.equals(word))
-                    return words.retrieve();
-                    words.findNext();
-                    } 
-            if(words.retrieve().word.equals(word))
+public Word find_or_create_new_Word(String word){ // if word is exist in list words then will return the same object if not a new object will be created
+    if(!words.empty()){
+        words.findFirst();
+        while(!words.last()){
+             if(words.retrieve().word.equals(word))
                 return words.retrieve();
-                }
-            return null;  
+             words.findNext();
+        } 
+        if(words.retrieve().word.equals(word))
+             return words.retrieve();
+    }
+    return null;  
     }
 
 }
