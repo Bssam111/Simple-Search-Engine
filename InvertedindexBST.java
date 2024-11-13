@@ -17,6 +17,6 @@ public void invert_index_BST(){
     }
 }
 public void display(){
-bst.ascending();
+bst.inOrder();
 }
 }
