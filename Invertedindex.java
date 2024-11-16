@@ -25,17 +25,19 @@ public void display(){
     words.findNext();
 }
 
-public void search_for_word(String str){
+public Word search_for_word(String str){
+    if(!words.empty()){
     words.findFirst();
     while(!words.last()){
         if(str.equals(words.retrieve().word))
-            words.retrieve().print_indexs();
+            return words.retrieve();
              words.findNext();
     } 
-        if(str.equals(words.retrieve().word))
-            words.retrieve().print_indexs();
-            
+    if(str.equals(words.retrieve().word))
+        return words.retrieve();
     }
+    return null;
+}
 
 
 public void invert_index(){ // this method will convert every word in the class document that is saved in the list of documents to word class and add the index in the list and add the word object in the word list

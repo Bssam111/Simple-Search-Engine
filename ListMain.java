@@ -3,16 +3,18 @@
 public class ListMain {
 
 	public static void main(String[] args) {
-		List<String> l1=new LinkedList<String>();
+		LinkedList<Integer> l1=new LinkedList<Integer>();
 		LinkedList<Integer> l2=new LinkedList<Integer>();
-	
-		//display(l4);
+		l2.insert(1);l2.insert(3);l2.insert(5);
+		l1.insert(1);l1.insert(6);l1.insert(7);
+	 	LinkedList<Integer> l3=concat(l1, l2, 2);
+		display(l3);
 	}
 	public static<T> void display(List<T> l) {
 		if(l.empty()) {System.out.println("empty"); return;}
 		l.findFirst();
 		while(!l.last()) {
-			System.out.println(l.retrieve());
+			System.out.print(l.retrieve()+",");
 			l.findNext();
 		}
 		System.out.println(l.retrieve());
@@ -86,21 +88,21 @@ public class ListMain {
 		l.insert(tmp.retrieve());
 		
 	}
-	public static<T> void insertinfirstQ(List<T> l,T data){
-		if(l.empty()) {l.insert(data); return;}
+	// public static<T> void insertinfirstQ(List<T> l,T data){
+	// 	if(l.empty()) {l.insert(data); return;}
 		
-		Queue<T> tmp=new LinkedQueue<T>();
-		l.findFirst();
-		while(!l.last()) {
-			tmp.enqueue(l.retrieve());
-			l.remove();
-		}
-		tmp.enqueue(l.retrieve()); l.remove();
-		l.insert(data);
-		while(tmp.length()>0) {
-			l.insert(tmp.serve());
-		}
-	}
+	// 	Queue<T> tmp=new LinkedQueue<T>();
+	// 	l.findFirst();
+	// 	while(!l.last()) {
+	// 		tmp.enqueue(l.retrieve());
+	// 		l.remove();
+	// 	}
+	// 	tmp.enqueue(l.retrieve()); l.remove();
+	// 	l.insert(data);
+	// 	while(tmp.length()>0) {
+	// 		l.insert(tmp.serve());
+	// 	}
+	// }
 	public static<T> void movefirtoccur(List<T> l,T data) {
 		if(l.empty()) return;
 		T d=null;
@@ -193,26 +195,26 @@ public class ListMain {
 //		l1.update(l2.retrieve());
 //		l1.insert(x);
 //	}
-	public static<T> void insertList(List<T> l1,List<T> l2,int i) {
-		if(l1.empty() || l2.empty()) return;
+	// public static<T> void insertList(List<T> l1,List<T> l2,int i) {
+	// 	if(l1.empty() || l2.empty()) return;
 		
-		l1.findFirst();
+	// 	l1.findFirst();
 		
-		for(int k=0;k<i;k++) {
-			l1.findNext();
-		}
-		l2.findFirst();
-		while(!l2.last()) {
-			l1.insert(l2.retrieve());
-			l2.findNext();
-		}
-		l1.insert(l2.retrieve());
-	}
-	public static<T> List<T> concat(List<T> l1,List<T> l2, int i ){
+	// 	for(int k=0;k<i;k++) {
+	// 		l1.findNext();
+	// 	}
+	// 	l2.findFirst();
+	// 	while(!l2.last()) {
+	// 		l1.insert(l2.retrieve());
+	// 		l2.findNext();
+	// 	}
+	// 	l1.insert(l2.retrieve());
+	// }
+	public static<T> LinkedList<Integer> concat(LinkedList<Integer> l1,LinkedList<Integer> l2, int i ){
 		if(l1.empty() || l2.empty()) return null;
 		l1.findFirst();l2.findFirst();
 		
-		List<T> list=new LinkedList<T>();
+		LinkedList<Integer> list=new LinkedList<Integer>();
 		for(int k=0;k<=i;k++) {
 			list.insert(l1.retrieve());
 			l1.findNext();

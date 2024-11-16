@@ -1,5 +1,4 @@
 
-
 public interface List<T> {
 boolean empty();
 boolean full();
