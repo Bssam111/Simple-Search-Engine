@@ -9,10 +9,14 @@ public static void main(String[] args){
     InvertedindexBST iib=new InvertedindexBST(ii);
     QueryProcessing q =new QueryProcessing(ii);
     Ranking ranking=new Ranking(i, ii, iib);
-   
-
-    ranking.indexQuery("sword snow");
-
+    
+    //System.out.println(iib.bst.findkey("national").retrieve());
+    double time=System.nanoTime();
+        ranking.invertedindexBSTRanking("national flag");
+       time=(System.nanoTime()-time)/1000000;
+       System.out.println("The time for inverted index with BST: "+time+"ms");
+    
+  //System.out.println(ii.freq(3, "green"));
    // i.print_document(1);
      //q.Query("market OR sports AND warming"); //case 1
     //i.print_document(1);

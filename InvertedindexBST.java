@@ -1,5 +1,5 @@
 public class InvertedindexBST {
-private BST<LinkedList<Integer>> bst;
+public BST<LinkedList<Integer>> bst;
 Invertedindex invertedindex;
 public InvertedindexBST(Invertedindex invertedindex) {
     bst=new BST<LinkedList<Integer>>();
@@ -15,6 +15,9 @@ public void invert_index_BST(){
         }
         bst.inseart(invertedindex.words.retrieve().indexs, invertedindex.words.retrieve().word);
     }
+}
+public int freq(int DocID,String word){
+    return invertedindex.freq(DocID, word);
 }
 public void display(){
 bst.inOrder();

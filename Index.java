@@ -35,6 +35,31 @@ public void print_all_document(){
      documents.retrieve().display_words();
 
 }
+public boolean isExist(String str){
+    if(!documents.empty()){
+        documents.findFirst();
+        while (!documents.last()) {
+            documents.retrieve().words.findFirst();
+            while (!documents.retrieve().words.last()) {
+                if(documents.retrieve().words.retrieve().equals(str))
+                    return true;
+                  documents.retrieve().words.findNext();  
+            }
+            if(documents.retrieve().words.retrieve().equals(str))
+                    return true;
+            documents.findNext();
+        }
+        documents.retrieve().words.findFirst();
+        while (!documents.retrieve().words.last()) {
+            if(documents.retrieve().words.retrieve().equals(str))
+                return true;
+              documents.retrieve().words.findNext();  
+        }
+        if(documents.retrieve().words.retrieve().equals(str))
+                return true;
+    }
+    return false;
+}
 
  private void load_document(){ 
         File f=new File(pathname);
@@ -49,8 +74,9 @@ public void print_all_document(){
                     int id=Integer.parseInt(line.substring(0,line.indexOf(',')).trim());// find the number of document
                      Document document=new Document(id);
                      String content=line.toLowerCase();
-                     content=content.replace("-", " ");//to separate word like record-brekaing --> record brekaing
-                    content=content.replaceAll("[!-@]", ""); // delete the punctuation and numbers from ! to @ in ASCII
+                    content=content.replace(".", "");//to separate word like record-brekaing --> record brekaing
+                    content=content.replaceAll("[!-,]", ""); // delete the punctuation and numbers from ! to @ in ASCII
+                    content=content.replaceAll("[0-9]", "");
                     String[] arrContent=content.split(" ");// sparate all words in array of content for ex content= "hello world", arrContent=[hello,world]
                   for(String s:arrContent){ // in document we have list of words so we want to add all words we get from the array above to this list
                     document.words.insert(s);

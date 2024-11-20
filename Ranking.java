@@ -11,13 +11,89 @@ public Ranking( Index index,Invertedindex invertedindex, InvertedindexBST invert
     this.invertedindex = invertedindex;
     this.invertedindexBST = invertedindexBST;
 }
+public void invertedindexBSTRanking(String str){
+    str=str.trim().toLowerCase();
+    String words[]=str.split(" ");
+    
+    for(String word: words){
+        if(word==""){
+            System.out.println("Empty words are not acceptable.");
+            return;
+        }
+        LinkedList<Integer> wordIndexs=invertedindexBST.bst.findkey(word);
+        if(wordIndexs==null){
+            System.out.println("'"+word+"'"+" is not exist in the documents.");
+            return;
+        }
+        int score=0;
+        wordIndexs.findFirst();
+        while (!wordIndexs.last()) {
+            score=invertedindexBST.freq(wordIndexs.retrieve(), word);
+            if(!is_inScorelLinkedList(wordIndexs.retrieve()))
+                scorelLinkedList.insert(new DocumentScore(wordIndexs.retrieve()));
 
-public void indexQuery(String str){
+                for(int i=0;i<score;i++)
+                    scorelLinkedList.retrieve().incress_score();
+                wordIndexs.findNext(); 
+        }
+        score=invertedindexBST.freq(wordIndexs.retrieve(), word);
+            if(!is_inScorelLinkedList(wordIndexs.retrieve()))
+                scorelLinkedList.insert(new DocumentScore(wordIndexs.retrieve()));
+
+                for(int i=0;i<score;i++)
+                    scorelLinkedList.retrieve().incress_score();
+    }
+    display();
+}
+public void invertedindexRanking(String str){
+    str=str.trim().toLowerCase();
+    String words[]=str.split(" ");
+
+    for(String word: words){// national flag
+        if(word==""){
+            System.out.println("Empty words are not acceptable.");
+            return;
+        }
+        int score=0;
+        Word w=invertedindex.findWord(word);
+
+        if(w==null){
+            System.out.println("'"+word+"'"+" is not exist in the documents.");
+            return;
+        }
+
+        w.indexs.findFirst();
+        while (!w.indexs.last()) {
+            score=invertedindex.freq(w.indexs.retrieve(), word);
+            if(!is_inScorelLinkedList(w.indexs.retrieve()))
+                scorelLinkedList.insert(new DocumentScore(w.indexs.retrieve()));
+            for(int i=0;i<score;i++)
+                scorelLinkedList.retrieve().incress_score();
+                w.indexs.findNext();       
+        }
+        score=invertedindex.freq(w.indexs.retrieve(), word);
+            if(!is_inScorelLinkedList(w.indexs.retrieve()))
+                scorelLinkedList.insert(new DocumentScore(w.indexs.retrieve()));
+            for(int i=0;i<score;i++)
+                scorelLinkedList.retrieve().incress_score();
+    }
+    display();
+}
+
+public void indexRanking(String str){
     str=str.trim().toLowerCase();
     String words[]=str.split(" ");
 
     for(String word: words){
-        int score=0;
+        if(word==""){
+            System.out.println("Empty words are not acceptable.");
+            return;
+        }
+        if(!index.isExist(word)){
+            System.out.println("'"+word+"'"+" is not exist in the documents.");
+            return;
+        }
+        int score=0;   
         index.documents.findFirst();
         while(!index.documents.last()){
             score=index.documents.retrieve().count_apprence(word);
@@ -33,12 +109,14 @@ public void indexQuery(String str){
             index.documents.findNext();
         }
         score=index.documents.retrieve().count_apprence(word);
+        if(score==0) continue;
         DocumentScore documentScore=find_or_createDcoumentScore(index.documents.retrieve().id);
             for(int i=0;i<score;i++)
                 documentScore.incress_score();
             if(!is_inScorelLinkedList(index.documents.retrieve().id))  
                 scorelLinkedList.insert(documentScore); 
     }
+   // bubbleSort();
     display();  
     }
     public boolean is_inScorelLinkedList(int id){
@@ -67,6 +145,40 @@ public void indexQuery(String str){
         }
         return new DocumentScore(id); 
     }
+
+    public void bubbleSort() {
+        if(scorelLinkedList.empty()) return;
+        scorelLinkedList.findFirst();
+        while (!scorelLinkedList.last()) {
+            DocumentScore min=scorelLinkedList.retrieve();
+            scorelLinkedList.findNext();
+            while (!scorelLinkedList.last()) {
+                if(min.score>scorelLinkedList.retrieve().score){
+                    int tmpdocID=scorelLinkedList.retrieve().docID;
+                    int tmpScore=scorelLinkedList.retrieve().score;
+                    scorelLinkedList.retrieve().docID=min.docID;
+                    scorelLinkedList.retrieve().score=min.score;
+                    min.docID=tmpdocID;
+                    min.score=tmpScore;
+                    
+                }
+                scorelLinkedList.findNext();
+            }
+            if(min.score>scorelLinkedList.retrieve().score){
+                int tmpdocID=scorelLinkedList.retrieve().docID;
+                int tmpScore=scorelLinkedList.retrieve().score;
+                scorelLinkedList.retrieve().docID=min.docID;
+                scorelLinkedList.retrieve().score=min.score;
+                min.docID=tmpdocID;
+                min.score=tmpScore;
+                
+            }
+            
+        }
+       
+	}
+
+	
 public void display(){
     if(!scorelLinkedList.empty()){
         System.out.println("DocID    Score");

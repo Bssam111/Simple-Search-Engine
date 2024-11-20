@@ -1,12 +1,14 @@
 public class TestBST {
     public static void main(String[] args) {
-        BST<Integer> bst=new BST<Integer>();
-        bst.inseart(1, "t");
-        bst.inseart(2, "d");
-        bst.inseart(5, "b");
-        bst.inseart(6, "x");
-        bst.inseart(3, "y");
-        bst.inseart(4, "i");
-    bst.ascending();
+        BST<LinkedList<Integer>> bst=new BST<LinkedList<Integer>>();
+        LinkedList<Integer> s=new LinkedList<>();
+        s.insert(1);
+        bst.inseart(s, "5");
+        bst.inseart(s, "6");
+        bst.inseart(s, "1");
+        bst.inseart(s, "2");
+        bst.inseart(s, "7");
+        bst.inseart(s, "8");
+    System.out.println(bst.findkey("7").retrieve());
     }
 }

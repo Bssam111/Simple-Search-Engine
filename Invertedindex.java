@@ -47,7 +47,7 @@ public void invert_index(){ // this method will convert every word in the class 
      tmp= index.documents.retrieve().words;
         tmp.findFirst();
         while(!tmp.last()){
-            Word w=find_or_create_new_Word(tmp.retrieve());
+            Word w=findWord(tmp.retrieve());
             if(w==null){
                 w=new Word(tmp.retrieve());
                 words.insert(w);
@@ -57,7 +57,7 @@ public void invert_index(){ // this method will convert every word in the class 
      
             tmp.findNext();
         }
-        Word w=find_or_create_new_Word(tmp.retrieve());
+        Word w=findWord(tmp.retrieve());
         if(w==null){
             w=new Word(tmp.retrieve());
             words.insert(w);
@@ -70,7 +70,7 @@ public void invert_index(){ // this method will convert every word in the class 
         tmp= index.documents.retrieve().words;
         tmp.findFirst();
         while(!tmp.last()){
-            Word w=find_or_create_new_Word(tmp.retrieve());
+            Word w=findWord(tmp.retrieve());
             if(w==null){
                 w=new Word(tmp.retrieve());
                 words.insert(w);
@@ -78,7 +78,7 @@ public void invert_index(){ // this method will convert every word in the class 
             w.add_index(index.documents.retrieve().id);
             tmp.findNext();
         }
-        Word w=find_or_create_new_Word(tmp.retrieve());
+        Word w=findWord(tmp.retrieve());
         if(w==null){
             w=new Word(tmp.retrieve());
             words.insert(w);
@@ -88,7 +88,7 @@ public void invert_index(){ // this method will convert every word in the class 
     
             index.documents.findNext();
     }
-public Word find_or_create_new_Word(String word){ // if word is exist in list words then will return the same object if not a new object will be created
+public Word findWord(String word){ // if word is exist in list words then will return the same object if not a new object will be created
     if(!words.empty()){
         words.findFirst();
         while(!words.last()){
@@ -101,6 +101,13 @@ public Word find_or_create_new_Word(String word){ // if word is exist in list wo
     }
     return null;  
     }
+public int freq(int DocID, String word){
+    if(index.documents.empty()) return 0;
+    index.documents.findFirst();
+    for(int i=1;i<DocID;i++)
+        index.documents.findNext();
+return index.documents.retrieve().count_apprence(word);
+}    
 
 }
 
