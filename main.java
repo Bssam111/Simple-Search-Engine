@@ -11,10 +11,9 @@ public static void main(String[] args){
     Ranking ranking=new Ranking(i, ii, iib);
     
     //System.out.println(iib.bst.findkey("national").retrieve());
-    double time=System.nanoTime();
-        ranking.invertedindexBSTRanking("national flag");
-       time=(System.nanoTime()-time)/1000000;
-       System.out.println("The time for inverted index with BST: "+time+"ms");
+    
+        ranking.indexRanking("national flag");
+       
     
   //System.out.println(ii.freq(3, "green"));
    // i.print_document(1);

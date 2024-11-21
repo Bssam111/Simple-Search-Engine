@@ -116,7 +116,6 @@ public void indexRanking(String str){
             if(!is_inScorelLinkedList(index.documents.retrieve().id))  
                 scorelLinkedList.insert(documentScore); 
     }
-   // bubbleSort();
     display();  
     }
     public boolean is_inScorelLinkedList(int id){
@@ -149,10 +148,10 @@ public void indexRanking(String str){
     public void bubbleSort() {
         if(scorelLinkedList.empty()) return;
         scorelLinkedList.findFirst();
-        while (!scorelLinkedList.last()) {
+        while (true) {
             DocumentScore min=scorelLinkedList.retrieve();
             scorelLinkedList.findNext();
-            while (!scorelLinkedList.last()) {
+            while (true) {
                 if(min.score>scorelLinkedList.retrieve().score){
                     int tmpdocID=scorelLinkedList.retrieve().docID;
                     int tmpScore=scorelLinkedList.retrieve().score;
@@ -162,21 +161,15 @@ public void indexRanking(String str){
                     min.score=tmpScore;
                     
                 }
+                if(scorelLinkedList.last()) break;
                 scorelLinkedList.findNext();
             }
-            if(min.score>scorelLinkedList.retrieve().score){
-                int tmpdocID=scorelLinkedList.retrieve().docID;
-                int tmpScore=scorelLinkedList.retrieve().score;
-                scorelLinkedList.retrieve().docID=min.docID;
-                scorelLinkedList.retrieve().score=min.score;
-                min.docID=tmpdocID;
-                min.score=tmpScore;
-                
-            }
-            
+            if(scorelLinkedList.last()) break;
+            scorelLinkedList.findNext();
         }
-       
-	}
+        
+}
+	
 
 	
 public void display(){
