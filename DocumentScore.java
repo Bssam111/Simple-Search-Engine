@@ -5,34 +5,53 @@ public class DocumentScore{
     public DocumentScore(int docID) {
         this.docID = docID;
     }
-    public void incress_score(){
-        score++;
+    public void incress_score(int numOfincresing){
+        score+=numOfincresing;
     }
     public void insertInArrange(LinkedList<DocumentScore> list) {
         if (list.empty()) {
+            list.insert(this);
             return;
         }
-
+        DocumentScore tmp=null;
         list.findFirst();
         while (!list.last()) {
-            if (this.score > list.retrieve().score) {//اذا السكور الحالي اكبر من حق النود يضيف مباشره اذا لا يمشي لين يلقى شي اكبر منه
-                list.insert(this);
+             tmp=list.retrieve();
+            if (this.score>tmp.score) {//اذا السكور الحالي اكبر من حق النود يضيف مباشره اذا لا يمشي لين يلقى شي اكبر منه
+               
+                list.update(this);
+                list.insert(tmp);
                 return;
+            }
+            else if(this.score==tmp.score&&this.docID<tmp.docID){
+                    list.update(this);
+                    list.insert(tmp);
+                    return;
             }
             list.findNext();
         }
-
-        if (this.score > list.retrieve().score) {//خاص لاخر نود
-            list.insert(this);
-        } else {
-            list.findNext();
-            list.insert(this);
+         tmp=list.retrieve();
+        if (this.score>tmp.score) {//اذا السكور الحالي اكبر من حق النود يضيف مباشره اذا لا يمشي لين يلقى شي اكبر منه
+            list.update(this);
+            list.insert(tmp);
         }
+        else if(this.score==tmp.score){
+            if(this.docID<tmp.docID){
+                list.update(this);
+                list.insert(tmp);
+                return;
+            } else list.insert(this);
+        }
+         
+      
     }
 
     
     public void display() {
-        System.out.println("Document ID: " + docID + ", Score: " + score);
+        String s= docID + "         ";
+        if(docID<9) s=s+" ";
+        s+=score;
+        System.out.println(s);
     }
 }
-}
+

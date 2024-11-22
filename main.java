@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class main {
 public static void main(String[] args){
-    Index i=new Index("dataset2.csv");
+    Index i=new Index("dataset.csv");
     Invertedindex ii=new Invertedindex(i);
     InvertedindexBST iib=new InvertedindexBST(ii);
     QueryProcessing q =new QueryProcessing(ii);
@@ -12,7 +12,7 @@ public static void main(String[] args){
     
     //System.out.println(iib.bst.findkey("national").retrieve());
     
-        ranking.indexRanking("national flag");
+        ranking.indexRanking("weather warming");
        
     
   //System.out.println(ii.freq(3, "green"));
