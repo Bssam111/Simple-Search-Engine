@@ -44,6 +44,24 @@ public LinkedList<Integer> findkey(String key) {
 	current=q;
 	return null;
 }
+public BSTWord findWord(String key) {
+	BSTNode<T> p=root;
+	BSTNode<T> q=root;
+	while(p!=null) {
+		q=p;
+		if(key.equals(p.key)) { 
+			current=p;
+			return new BSTWord<T>(p.data, p.key);
+		}
+		else if(key.compareToIgnoreCase(p.key)>0) 
+			p=p.right;
+		else 
+			p=p.left;
+	}
+	current=q;
+	return null;
+}
+
 public boolean inseart(T data,String key) {
 	if(root==null){ root=new BSTNode<T>(data,key); return false;}
 	BSTNode<T> p=root;

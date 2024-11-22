@@ -4,26 +4,36 @@ import java.util.Scanner;
 
 public class main {
 public static void main(String[] args){
-    Index i=new Index("dataset.csv");
+    Index i=new Index("dataset2.csv");
     Invertedindex ii=new Invertedindex(i);
     InvertedindexBST iib=new InvertedindexBST(ii);
-    QueryProcessing q =new QueryProcessing(ii);
-    Ranking ranking=new Ranking(i, ii, iib);
+    QueryProcessing q =new QueryProcessing(i,ii,iib);
+    Ranking ranking=new Ranking(i,ii,iib);
     
     //System.out.println(iib.bst.findkey("national").retrieve());
     
-        ranking.indexRanking("weather warming");
-       
+        //ranking.indexRanking("weather warming");
+        q.IndexQuery("green OR shahada");
     
   //System.out.println(ii.freq(3, "green"));
    // i.print_document(1);
      //q.Query("market OR sports AND warming"); //case 1
     //i.print_document(1);
-   // i.print_all_document();
+    //i.print_all_document();
+    //System.out.println(i.vocab);
+      //display(i.findIndexes("green"));
    // q.Query("record");//case 2
     //ii.display();
    //iib.display();
     
  
      }
+     public static void display(LinkedList<Integer> ll){
+      ll.findFirst();
+      while (!ll.last()) {
+        System.out.print(ll.retrieve()+",");
+        ll.findNext();
+      }
+      System.out.println(ll.retrieve());
+     } 
 }

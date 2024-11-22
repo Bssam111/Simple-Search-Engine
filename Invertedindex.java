@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Invertedindex {
 Index index;    
 public LinkedList<Word> words;
-
 public Invertedindex(Index index) {
         words=new LinkedList<Word>();
         this.index=index;
@@ -25,21 +24,6 @@ public void display(){
     words.findNext();
 }
 
-public Word search_for_word(String str){
-    if(!words.empty()){
-    words.findFirst();
-    while(!words.last()){
-        if(str.equals(words.retrieve().word))
-            return words.retrieve();
-             words.findNext();
-    } 
-    if(str.equals(words.retrieve().word))
-        return words.retrieve();
-    }
-    return null;
-}
-
-
 public void invert_index(){ // this method will convert every word in the class document that is saved in the list of documents to word class and add the index in the list and add the word object in the word list
     index.documents.findFirst();
     LinkedList<String> tmp=null;
@@ -53,8 +37,6 @@ public void invert_index(){ // this method will convert every word in the class 
                 words.insert(w);
             }
             w.add_index(index.documents.retrieve().id);
-            
-     
             tmp.findNext();
         }
         Word w=findWord(tmp.retrieve());
@@ -104,7 +86,7 @@ public Word findWord(String word){ // if word is exist in list words then will r
 public int freq(int DocID, String word){
     if(index.documents.empty()) return 0;
     index.documents.findFirst();
-    for(int i=0;i<DocID;i++)// impornt if you want use it for datacsv.csv make sure that i=0
+    for(int i=1;i<DocID;i++)// impornt if you want use it for datacsv.csv make sure that i=0
         index.documents.findNext();
 return index.documents.retrieve().count_apprence(word);
 }    

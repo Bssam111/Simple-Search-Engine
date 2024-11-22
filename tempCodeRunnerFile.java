@@ -1,12 +1,8 @@
- //  tmp=list.retrieve();
-        // if (this.score>tmp.score) {//اذا السكور الحالي اكبر من حق النود يضيف مباشره اذا لا يمشي لين يلقى شي اكبر منه
-        //     list.update(this);
-        //     list.insert(tmp);
-        // }
-        // else if(this.score==tmp.score){
-        //     if(this.docID<tmp.docID){
-        //         list.update(this);
-        //         list.insert(tmp);
-        //         return;
+ // andLinkedList.findFirst();
+        //     while(!andLinkedList.last()){ //here we do AND operstion to words in andLinkedList
+        //         String[] splitANDs=andLinkedList.retrieve().split("AND");
+        //         orLinkedList.insert(ANDQuery(splitANDs));// and then store them in orLinekdList sind the method  ANDQuery return LinkedList of int
+        //         andLinkedList.findNext();
         //     }
-        // }
+        //     String[] splitANDs=andLinkedList.retrieve().split("AND");
+        //         orLinkedList.insert(ANDQuery(splitANDs));
