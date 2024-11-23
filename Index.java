@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class Index {
 public LinkedList<Document> documents;
 LinkedList<String> countVocb;
-int tokens;
-int vocab;
+private int tokens;
+private int vocab;
 String pathname;
 public Index(String pathname) {
     this.pathname=pathname;
@@ -163,5 +163,12 @@ public LinkedList<Integer> findIndexes(String str){
     }
     return indexs;
 
-}    
+} 
+    public int getTokens() {
+        return tokens;
+    }
+
+    public int getVocabulary() {
+        return vocab;
+    }
 }
