@@ -49,7 +49,7 @@ public class DocumentScore{
     
     public void display() {
         String s= docID + "         ";
-        if(docID<9) s=s+" ";
+        if(docID<10) s=s+" ";
         s+=score;
         System.out.println(s);
     }

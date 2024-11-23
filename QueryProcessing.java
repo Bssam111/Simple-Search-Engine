@@ -10,7 +10,7 @@ private InvertedindexBST invertedindexBST;
  }
  public void IndexQuery(String str){//"color AND green AND white
     str=str.replace(" ","");
-    String splitingWords[]=str.split("OR");//green OR shahada
+    String splitingWords[]=str.split("OR");//[market], [sports]
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
     LinkedList<LinkedList<Integer>> indexs=new LinkedList<LinkedList<Integer>>();
     for(String andString:splitingWords){ // just store in the linked list of linked list of int
@@ -18,6 +18,7 @@ private InvertedindexBST invertedindexBST;
         for(String word:splitANDs)
         indexs.insert(index.findIndexes(word));
         orLinkedList.insert(Index_ANDQuery(indexs));
+        
     }
    
         Query(str,orLinkedList);
@@ -56,12 +57,12 @@ private InvertedindexBST invertedindexBST;
  }
  private LinkedList<Integer> Index_ANDQuery(LinkedList<LinkedList<Integer>> indexs){
     // if(!isExist(words))// check if the word not exist print message and retuen false
-    //     return null;
-    if(indexs==null&&indexs.empty()) 
-        return null;
+    //     return null;                                     c
+    if(indexs==null&&indexs.empty()) // 2 4 5
+        return null; 
+    indexs.findFirst();             // l1= 2 4 5, l2=5 4 2
     if(indexs.last()) 
         return indexs.retrieve();
-    indexs.findFirst();
     LinkedList<Integer> l1=new LinkedList<Integer>();
     l1=indexs.retrieve();
     LinkedList<Integer> l2=null;
@@ -101,20 +102,6 @@ private LinkedList<Integer> BST_ANDQuery(String[] words){
     return l1;
         
 }
-// private LinkedList<Integer> index_ANDQuery(String[] words){
-//     if(!isExist(words))// check if the word not exist print message and retuen false
-//         return null;
-
-//     LinkedList<Integer> l1=new LinkedList<Integer>();
-//     l1=(LinkedList<Integer>)(invertedindexBST.bst.findWord(words[0]).data);//here we will search on word in the invertedinex list and return it and get index by using .indexs, so if we have like indexs={1,3,5}
-//     LinkedList<Integer> l2=null;
-//     for(int i=1;i<words.length;i++){// start 1 sincce we get 0 above
-//      l2=(LinkedList<Integer>)(invertedindexBST.bst.findWord(words[i]).data);// here let say x={1,3,5} and y= {1,4,5} we will get {1,5}
-//       l1=find_intersection(l1,l2);//here we will chane x value to the interstion since if have more than two wrod we can handle it
-//     }
-//     return l1;
-        
-// }
 private static LinkedList<Integer> ORQuery(LinkedList<LinkedList<Integer>> indexs){// ORQuery is simply merge the list
     indexs.findFirst(); // this while to return null if we have null linked list of int in indexs
     while(!indexs.last()){
@@ -165,12 +152,15 @@ private boolean isExist(String[] words){//this method is simply search for words
 } 
 private LinkedList<Integer> find_intersection(LinkedList<Integer> x, LinkedList<Integer> y){// just find intersction like if we have {1,5,8} and {2,5,7} we will get {5}
     LinkedList<Integer> intersection=new LinkedList<Integer>();
-     x.findFirst();               
-     while(!x.last()){
-        y.findFirst();
+     x.findFirst();       //x      //y       // intercectioin= 2,5,4
+     while(!x.last()){// 2 5 4 // 1 5 4 2
+        y.findFirst();//     c          c
         while(!y.last()){
-             if(x.retrieve().equals(y.retrieve()))
+             if(x.retrieve().equals(y.retrieve())){
                    intersection.insert(x.retrieve());
+                   y.findNext();
+                   break;
+             }
             y.findNext();
          }
          if(x.retrieve().equals(y.retrieve()))
@@ -179,15 +169,16 @@ private LinkedList<Integer> find_intersection(LinkedList<Integer> x, LinkedList<
      }
      y.findFirst();
     while(!y.last()){
-        if(x.retrieve().equals(y.retrieve()))
-               intersection.insert(x.retrieve());
+        if(x.retrieve().equals(y.retrieve())){
+            intersection.insert(x.retrieve());
+            y.findNext();
+            break;
+      }
          y.findNext();
      }
      if(x.retrieve().equals(y.retrieve()))
           intersection.insert(x.retrieve());
-     x=intersection;
-    
- return intersection;
+    return intersection;
 }
 private static LinkedList<Integer> merge(LinkedList<Integer> x, LinkedList<Integer> y){// simple method just merger to set like if we have {1,5,6,8} and {5,9,4,1} we get {1,5,6,8,9,4} ( merge without duplication )
     LinkedList<Integer> merge=new LinkedList<Integer>();
@@ -244,8 +235,8 @@ public static void main(String[] args) {
     LinkedList<Integer> l3=new LinkedList<Integer>();
     LinkedList<LinkedList<Integer>> l=new LinkedList<LinkedList<Integer>>();
     l1.insert(2);l1.insert(4);l1.insert(5);
-    l2.insert(5);l2.insert(4);l2.insert(6);
-    l3.insert(1);l3.insert(5);l3.insert(4);
+    l2.insert(5);l2.insert(4);l2.insert(2);
+    l3.insert(1);l3.insert(5);l3.insert(4);l3.insert(2);
     l.insert(l1); l.insert(l2); l.insert(l3);
     LinkedList<Integer> ll =q.Index_ANDQuery(l);
 

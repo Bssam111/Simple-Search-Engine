@@ -86,7 +86,7 @@ public Word findWord(String word){ // if word is exist in list words then will r
 public int freq(int DocID, String word){
     if(index.documents.empty()) return 0;
     index.documents.findFirst();
-    for(int i=1;i<DocID;i++)// impornt if you want use it for datacsv.csv make sure that i=0
+    for(int i=0;i<DocID;i++)// impornt if you want use it for datacsv.csv make sure that i=0
         index.documents.findNext();
 return index.documents.retrieve().count_apprence(word);
 }    

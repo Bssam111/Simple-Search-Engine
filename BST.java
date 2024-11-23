@@ -13,20 +13,6 @@ public boolean search(String key) {
 	}
 	return false;
 }
-
-// private boolean recsearch(BSTNode<T> p,int key) {
-// 	if(p==null) 
-// 		return false;
-// 	if(p.key==key) 
-// 		return true;
-// 	if(key>p.key) 
-// 		return recsearch(p.right, key);
-// 	return recsearch(p.left, key);
-// }
-
-// public boolean recsearch(int key) {
-// 	return recsearch(root, key);
-// }
 public LinkedList<Integer> findkey(String key) {
 	BSTNode<T> p=root;
 	BSTNode<T> q=root;

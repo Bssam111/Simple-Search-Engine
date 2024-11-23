@@ -1,6 +1,6 @@
 public class Word {
-String word;
-LinkedList<Integer> indexs;
+public String word;
+public LinkedList<Integer> indexs;
 
 public Word(String word) {
     indexs=new LinkedList<Integer>();

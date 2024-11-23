@@ -5,11 +5,14 @@ InvertedindexBST invertedindexBST;
 LinkedList <DocumentScore> scorelLinkedList;
 
 
-public Ranking( Index index,Invertedindex invertedindex, InvertedindexBST invertedindexBST) {
+public Ranking(Index index,Invertedindex invertedindex, InvertedindexBST invertedindexBST) {
     scorelLinkedList =new LinkedList<DocumentScore>();
     this.index = index;
     this.invertedindex = invertedindex;
     this.invertedindexBST = invertedindexBST;
+}
+public void createNewLinkedList(){
+    scorelLinkedList =new LinkedList<DocumentScore>();
 }
 public void invertedindexBSTRanking(String str){
     str=str.trim().toLowerCase();
@@ -31,16 +34,18 @@ public void invertedindexBSTRanking(String str){
             score=invertedindexBST.freq(wordIndexs.retrieve(), word);
             DocumentScore documentScore=find_or_createDcoumentScore(wordIndexs.retrieve());
             documentScore.incress_score(score);
-            if(!is_inScorelLinkedList(wordIndexs.retrieve()))
-               documentScore.insertInArrange(scorelLinkedList);
+            if(is_inScorelLinkedList(wordIndexs.retrieve()))
+                 removeFromScorelLinkedList(index.documents.retrieve().id);
+            documentScore.insertInArrange(scorelLinkedList);
               // scorelLinkedList.insert(documentScore);
                 wordIndexs.findNext(); 
         }
         score=invertedindexBST.freq(wordIndexs.retrieve(), word);
         DocumentScore documentScore=find_or_createDcoumentScore(wordIndexs.retrieve());
             documentScore.incress_score(score);
-            if(!is_inScorelLinkedList(wordIndexs.retrieve()))
-                documentScore.insertInArrange(scorelLinkedList);
+            if(is_inScorelLinkedList(wordIndexs.retrieve()))
+                removeFromScorelLinkedList(index.documents.retrieve().id);
+             documentScore.insertInArrange(scorelLinkedList);
                 //scorelLinkedList.insert(documentScore);
                
     }
@@ -66,15 +71,17 @@ public void invertedindexRanking(String str){
             score=invertedindex.freq(w.indexs.retrieve(), word);
             DocumentScore documentScore=find_or_createDcoumentScore(w.indexs.retrieve());
             documentScore.incress_score(score);
-            if(!is_inScorelLinkedList(w.indexs.retrieve()))
-                documentScore.insertInArrange(scorelLinkedList);
+            if(is_inScorelLinkedList(w.indexs.retrieve()))
+                removeFromScorelLinkedList(index.documents.retrieve().id);
+            documentScore.insertInArrange(scorelLinkedList);
             w.indexs.findNext();       
         }
         score=invertedindex.freq(w.indexs.retrieve(), word);
         DocumentScore documentScore=find_or_createDcoumentScore(w.indexs.retrieve());
         documentScore.incress_score(score);
-            if(!is_inScorelLinkedList(w.indexs.retrieve()))
-                documentScore.insertInArrange(scorelLinkedList);
+            if(is_inScorelLinkedList(w.indexs.retrieve()))
+                removeFromScorelLinkedList(index.documents.retrieve().id);
+            documentScore.insertInArrange(scorelLinkedList);
     }
     display();
 }
@@ -104,7 +111,6 @@ public void indexRanking(String str){
             documentScore.incress_score(score);
                  if(is_inScorelLinkedList(index.documents.retrieve().id))
                     removeFromScorelLinkedList(index.documents.retrieve().id);
-                    // scorelLinkedList.insert(documentScore); 
                     documentScore.insertInArrange(scorelLinkedList)  ;      
             index.documents.findNext();
         }
@@ -114,7 +120,6 @@ public void indexRanking(String str){
         documentScore.incress_score(score);
         if(is_inScorelLinkedList(index.documents.retrieve().id))
             removeFromScorelLinkedList(index.documents.retrieve().id);
-                //scorelLinkedList.insert(documentScore); 
                 documentScore.insertInArrange(scorelLinkedList)  ;     
     }
     display();  
@@ -158,9 +163,6 @@ public void removeFromScorelLinkedList(int docID){
         scorelLinkedList.remove();
     }
 }
-	
-
-	
 public void display(){
     if(!scorelLinkedList.empty()){
         System.out.println("DocID    Score");

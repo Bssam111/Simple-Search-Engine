@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class MainMenu {
 
     public static void main(String[] args) {
-        Index index = new Index("Resources/dataset2.csv");
+        Index index = new Index("dataset.csv");
         Invertedindex invertedIndex = new Invertedindex(index);
         InvertedindexBST invertedIndexBST = new InvertedindexBST(invertedIndex);
         QueryProcessing queryProcessing = new QueryProcessing(index, invertedIndex, invertedIndexBST);
@@ -59,14 +59,20 @@ public class MainMenu {
         if (retrievalChoice == 1) {
            
             if (isIndex) {
+                System.out.println("------------------------------------------------");
                 queryProcessing.IndexQuery(query);
+                System.out.println("------------------------------------------------");
             } else {
                 if (ranking != null) {
                     if (ranking != null) {
                         if (ranking.invertedindexBST != null) {
+                            System.out.println("------------------------------------------------");
                             queryProcessing.BSTQuery(query);
+                            System.out.println("------------------------------------------------");
                         } else {
+                            System.out.println("------------------------------------------------");
                             queryProcessing.invertedIndexQuery(query);
+                            System.out.println("------------------------------------------------");
                         }
                     }
                 }
@@ -74,12 +80,15 @@ public class MainMenu {
         } else if (retrievalChoice == 2) {
           
             if (isIndex) {
+                ranking.createNewLinkedList();
                 ranking.indexRanking(query);
             } else {
                 if (ranking != null) {
                     if (ranking.invertedindexBST != null) {
+                        ranking.createNewLinkedList();
                         ranking.invertedindexBSTRanking(query);
                     } else {
+                        ranking.createNewLinkedList();
                         ranking.invertedindexRanking(query);
                     }
                 }
