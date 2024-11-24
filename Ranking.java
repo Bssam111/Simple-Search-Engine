@@ -124,8 +124,8 @@ public void indexRanking(String str){
     }
     display();  
     }
-    public boolean is_inScorelLinkedList(int id){
-        if(!scorelLinkedList.empty()){
+  public boolean is_inScorelLinkedList(int id){
+     if(!scorelLinkedList.empty()){
             scorelLinkedList.findFirst();
             while (!scorelLinkedList.last()) {
                     if(scorelLinkedList.retrieve().docID==id)
@@ -135,21 +135,21 @@ public void indexRanking(String str){
             if(scorelLinkedList.retrieve().docID==id)
                 return true;
         }
-        return false;
-    }
-    public DocumentScore find_or_createDcoumentScore(int id){
-        if(!scorelLinkedList.empty()){
-            scorelLinkedList.findFirst();
-            while(!scorelLinkedList.last()){
-                if(scorelLinkedList.retrieve().docID==id)
-                    return scorelLinkedList.retrieve();
-                scorelLinkedList.findNext();  
-            }
-            if(scorelLinkedList.retrieve().docID==id)
-                    return scorelLinkedList.retrieve();     
+    return false;
+ }
+ public DocumentScore find_or_createDcoumentScore(int id){
+     if(!scorelLinkedList.empty()){
+          scorelLinkedList.findFirst();
+          while(!scorelLinkedList.last()){
+              if(scorelLinkedList.retrieve().docID==id)
+                   return scorelLinkedList.retrieve();
+               scorelLinkedList.findNext();  
         }
-        return new DocumentScore(id); 
-    }
+        if(scorelLinkedList.retrieve().docID==id)
+                return scorelLinkedList.retrieve();     
+     }
+     return new DocumentScore(id); 
+}
 public void removeFromScorelLinkedList(int docID){
     if(!scorelLinkedList.empty()){
         scorelLinkedList.findFirst();

@@ -102,7 +102,7 @@ private LinkedList<Integer> BST_ANDQuery(String[] words){
     return l1;
         
 }
-private static LinkedList<Integer> ORQuery(LinkedList<LinkedList<Integer>> indexs){// ORQuery is simply merge the list
+private LinkedList<Integer> ORQuery(LinkedList<LinkedList<Integer>> indexs){// ORQuery is simply merge the list
     indexs.findFirst(); // this while to return null if we have null linked list of int in indexs
     while(!indexs.last()){
     if(indexs.retrieve()==null)
@@ -180,7 +180,7 @@ private LinkedList<Integer> find_intersection(LinkedList<Integer> x, LinkedList<
           intersection.insert(x.retrieve());
     return intersection;
 }
-private static LinkedList<Integer> merge(LinkedList<Integer> x, LinkedList<Integer> y){// simple method just merger to set like if we have {1,5,6,8} and {5,9,4,1} we get {1,5,6,8,9,4} ( merge without duplication )
+private  LinkedList<Integer> merge(LinkedList<Integer> x, LinkedList<Integer> y){// simple method just merger to set like if we have {1,5,6,8} and {5,9,4,1} we get {1,5,6,8,9,4} ( merge without duplication )
     LinkedList<Integer> merge=new LinkedList<Integer>();
     x.findFirst();
     while(!x.empty()&&!x.last()){
@@ -199,7 +199,7 @@ private static LinkedList<Integer> merge(LinkedList<Integer> x, LinkedList<Integ
   merge.insert(y.retrieve());
 return merge;
 }
-private static boolean inList(LinkedList<Integer> l,Integer i){// return true if the element in the linked list otherwise return false
+private  boolean inList(LinkedList<Integer> l,Integer i){// return true if the element in the linked list otherwise return false
     if(l!=null&&!l.empty()){ 
         l.findFirst();
         while(!l.last()){
@@ -220,7 +220,7 @@ private void displyAllDoc(LinkedList<Integer> orquery) {
     }
     invertedindex.index.print_document(orquery.retrieve());
 }
-private static void display(LinkedList<Integer> l){
+private void display(LinkedList<Integer> l){
     l.findFirst();
     while (!l.last()) {
         System.out.print(l.retrieve()+",");
