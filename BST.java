@@ -28,7 +28,7 @@ public LinkedList<Integer> findkey(String key) {
 			p=p.left;
 	}
 	current=q;
-	return null;
+	return new LinkedList<Integer>();
 }
 public BSTWord findWord(String key) {
 	BSTNode<T> p=root;

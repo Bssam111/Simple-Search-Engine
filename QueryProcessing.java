@@ -9,11 +9,11 @@ private InvertedindexBST invertedindexBST;
     this.invertedindexBST=invertedindexBST;
  }
  public void IndexQuery(String str){
-    str=str.replace(" ","");//greenORshahada
+    str=str.replace(" ","");
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
     
-    String splitingWords[]=str.split("OR");// marketORsportsANDwarming
-    //splitingWords=[green,shahada]
+    String splitingWords[]=str.split("OR");
+    
     LinkedList<LinkedList<Integer>> indexs=new LinkedList<LinkedList<Integer>>();
     for(String word:splitingWords){ 
         if(!word.contains("AND")){
@@ -21,16 +21,14 @@ private InvertedindexBST invertedindexBST;
             continue;
         }
         String[] splitANDs= word.split("AND");
-        for(String word1:splitANDs)    //market=[12,41,0]
-            indexs.insert(index.findIndexes(word1));
+        for(String word1:splitANDs)    
+            indexs.insert(index.findIndexes(word1));//worst o(n * m) avr :o(n/2 * m)=o(n * m), n: documents linked list m: words in document
         orLinkedList.insert(Index_ANDQuery(indexs));
-        
     }
-
-        //display_listoflist(orLinkedList);
-        
-        
         Query(str,orLinkedList);
+
+        //worst: o(n * m) 
+        //avr: o(n *m )  
  }
 private void display_listoflist(LinkedList<LinkedList<Integer>> orLinkedList) {
     orLinkedList.findFirst();
@@ -52,19 +50,19 @@ private void display_listoflist(LinkedList<LinkedList<Integer>> orLinkedList) {
 }
  public void invertedIndexQuery(String str){
     str=str.replace(" ","");
-    String splitingWords[]=str.split("OR");//color AND green OR white
-    //splitingWords=[colorANDgreenANDwhite]
+    String splitingWords[]=str.split("OR");
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
-    for(String word:splitingWords){ // just store in the linked list of linked list of int
+    for(String word:splitingWords){ 
         if(!word.contains("AND")){
-            orLinkedList.insert(index.findIndexes(word));
+            orLinkedList.insert(invertedindex.findIndexs(word));// w: o(n)  a: o(n/2)=o(n)
             continue;
         }
         String[] splitANDs=word.split("AND");
-        //splitANDs=[color,green,white]
         orLinkedList.insert(invertedIndex_ANDQuery(splitANDs));
     }
         Query(str,orLinkedList);
+        //worst: o(n)
+        // avr: o(n)
  }
 
  public void BSTQuery(String str){
@@ -73,13 +71,16 @@ private void display_listoflist(LinkedList<LinkedList<Integer>> orLinkedList) {
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
     for(String word:splitingWords){ // just store in the linked list of linked list of int
         if(!word.contains("AND")){
-            orLinkedList.insert(index.findIndexes(word));
+            orLinkedList.insert(invertedindexBST.bst.findkey(word));//worst o(n), avr=o(log(n))
             continue;
         }
         String[] splitANDs=word.split("AND");
-        orLinkedList.insert(BST_ANDQuery(splitANDs));
+        orLinkedList.insert(BST_ANDQuery(splitANDs));// w o(n) a: o(log(n))
     }
         Query(str,orLinkedList);
+
+        //worst: o(n)
+        // avr: o( log(n) )
  }
  
  private void Query(String str,LinkedList<LinkedList<Integer>> orLinkedList){// here we split the str with 'OR' and then using AND, like if we have str="world AND color OR white"  we add world AND color to the linked list of linked list of string so we will have this ndoes (worldANDcolor)-->(white) we will do 'AND' operation in the first like if we have world in documets={1,2,5} and color in documets={1,4,5} that will equal in AND operation the intersection beetwen them which is {1,5} and then the AND operation for another nodes which is white is the same since we havent AND with it so let say white is {1,3} now we store [{1,5},{1,3}] in linked list of linked list of intgears and then do OR operstion beetwen them so OR in {1,3} , {1,5} is equal to {1,3,5} so these document that we will print. 
@@ -132,15 +133,15 @@ private LinkedList<Integer> invertedIndex_ANDQuery(String[] words){
     return l1;
 }
 private LinkedList<Integer> BST_ANDQuery(String[] words){
-    if(!isExist(words))// check if the word not exist print message and retuen false
+    if(!isExist(words))
         return null;
 
     LinkedList<Integer> l1=new LinkedList<Integer>();
-    l1=(LinkedList<Integer>)(invertedindexBST.bst.findWord(words[0]).data);//here we will search on word in the invertedinex list and return it and get index by using .indexs, so if we have like indexs={1,3,5}
+    l1=(LinkedList<Integer>)(invertedindexBST.bst.findWord(words[0]).data);
     LinkedList<Integer> l2=null;
-    for(int i=1;i<words.length;i++){// start 1 sincce we get 0 above
-     l2=(LinkedList<Integer>)(invertedindexBST.bst.findWord(words[i]).data);// here let say l1={1,3,5} and l2= {1,4,5} we will get {1,5}
-      l1=find_intersection(l1,l2);//here we will chane x value to the interstion since if have more than two wrod we can handle it
+    for(int i=1;i<words.length;i++){
+     l2=(LinkedList<Integer>)(invertedindexBST.bst.findWord(words[i]).data);// w o(n) a: o(log(n))
+      l1=find_intersection(l1,l2);
     }
     return l1;
         

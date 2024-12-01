@@ -83,6 +83,21 @@ public Word findWord(String word){ // if word is exist in list words then will r
     }
     return null;  
     }
+
+    public LinkedList<Integer> findIndexs(String word){ // if word is exist in list words then will return the same object if not a new object will be created
+        if(!words.empty()){
+            words.findFirst();
+            while(!words.last()){
+                 if(words.retrieve().word.equals(word))
+                    return words.retrieve().indexs;
+                 words.findNext();
+            } 
+            if(words.retrieve().word.equals(word))
+                 return words.retrieve().indexs;
+        }
+        return new LinkedList<Integer>();  
+        }
+
 public int freq(int DocID, String word){
     if(index.documents.empty()) return 0;
     index.documents.findFirst();

@@ -17,7 +17,7 @@ public class DocumentScore{
         list.findFirst();
         while (!list.last()) {
              tmp=list.retrieve();
-            if (this.score>tmp.score) {//اذا السكور الحالي اكبر من حق النود يضيف مباشره اذا لا يمشي لين يلقى شي اكبر منه
+            if (this.score>tmp.score) {
                
                 list.update(this);
                 list.insert(tmp);
@@ -31,7 +31,7 @@ public class DocumentScore{
             list.findNext();
         }
          tmp=list.retrieve();
-        if (this.score>tmp.score) {//اذا السكور الحالي اكبر من حق النود يضيف مباشره اذا لا يمشي لين يلقى شي اكبر منه
+        if (this.score>tmp.score) {
             list.update(this);
             list.insert(tmp);
         }

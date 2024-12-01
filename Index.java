@@ -39,7 +39,7 @@ public void print_all_document(){
      documents.retrieve().display_words();
 
 }
-public boolean isExist(String str){
+public boolean isExist(String str){//o(n*m)
     if(!documents.empty()){
         documents.findFirst();
         while (!documents.last()) {
@@ -129,7 +129,7 @@ private void delete_stop_words(Document d) throws FileNotFoundException {
       d.words.remove();
     }
 }
-public LinkedList<Integer> findIndexes(String str){
+public LinkedList<Integer> findIndexes(String str){// o(n*m)
     LinkedList<Integer> indexs=new LinkedList<Integer>();
     if(!documents.empty()){
         documents.findFirst();

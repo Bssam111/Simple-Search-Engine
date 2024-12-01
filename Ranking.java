@@ -23,21 +23,21 @@ public void invertedindexBSTRanking(String str){ // green color
             System.out.println("Empty words are not acceptable.");
             return;
         }
-        LinkedList<Integer> wordIndexs=invertedindexBST.bst.findkey(word);
+        LinkedList<Integer> wordIndexs=invertedindexBST.bst.findkey(word);// w:n, a:log(n)
         if(wordIndexs==null){
             System.out.println("'"+word+"'"+" is not exist in the documents.");
             return;
         }
-        int score=0;            // Document 3: "The bright green color known as emerald green"
+        int score=0;            
         wordIndexs.findFirst();
-        while (!wordIndexs.last()) {
+        while (!wordIndexs.last()) {    //m
             score=invertedindexBST.freq(wordIndexs.retrieve(), word);
-            DocumentScore documentScore=find_or_createDcoumentScore(wordIndexs.retrieve());
-            documentScore.incress_score(score);
-            if(is_inScorelLinkedList(wordIndexs.retrieve()))
-                 removeFromScorelLinkedList(index.documents.retrieve().id);
-            documentScore.insertInArrange(scorelLinkedList);
-              // scorelLinkedList.insert(documentScore);
+            DocumentScore documentScore=find_or_createDcoumentScore(wordIndexs.retrieve()); // s
+            documentScore.incress_score(score); // 1
+            if(is_inScorelLinkedList(wordIndexs.retrieve()))// s
+                 removeFromScorelLinkedList(index.documents.retrieve().id);//1
+            documentScore.insertInArrange(scorelLinkedList);// s
+              
                 wordIndexs.findNext(); 
         }
         score=invertedindexBST.freq(wordIndexs.retrieve(), word);
@@ -46,47 +46,51 @@ public void invertedindexBSTRanking(String str){ // green color
             if(is_inScorelLinkedList(wordIndexs.retrieve()))
                 removeFromScorelLinkedList(index.documents.retrieve().id);
              documentScore.insertInArrange(scorelLinkedList);
-                //scorelLinkedList.insert(documentScore);
+                
                
     }
-    display();
+    display();// s
+    //worst: o(n * m) : m=wordIndexs & n =key in bst
+    //avr: o(log(n) * m) : s=ScorelLinkedList & m=wordIndexs & n =key in bst
 }
 public void invertedindexRanking(String str){
     str=str.trim().toLowerCase();
     String words[]=str.split(" ");
 
     for(String word: words){// national flag
-        if(word==""){
+        if(word.isEmpty()){
             System.out.println("Empty words are not acceptable.");
             return;
         }
         int score=0;
-        Word w=invertedindex.findWord(word);
+        Word w=invertedindex.findWord(word);// avr: o(n/2)=o(n), worst=o(n)
         if(w==null){
             System.out.println("'"+word+"'"+" is not exist in the documents.");
             return;
         }
         w.indexs.findFirst();
-        while (!w.indexs.last()) {
+        while (!w.indexs.last()) {// o(m)
             score=invertedindex.freq(w.indexs.retrieve(), word);
-            DocumentScore documentScore=find_or_createDcoumentScore(w.indexs.retrieve());
+            DocumentScore documentScore=find_or_createDcoumentScore(w.indexs.retrieve());// o(s)
             documentScore.incress_score(score);
-            if(is_inScorelLinkedList(w.indexs.retrieve()))
-                removeFromScorelLinkedList(index.documents.retrieve().id);
-            documentScore.insertInArrange(scorelLinkedList);
+            if(is_inScorelLinkedList(w.indexs.retrieve()))//o(s)
+                removeFromScorelLinkedList(index.documents.retrieve().id);//o(s)
+            documentScore.insertInArrange(scorelLinkedList);//o(s)
             w.indexs.findNext();       
         }
         score=invertedindex.freq(w.indexs.retrieve(), word);
-        DocumentScore documentScore=find_or_createDcoumentScore(w.indexs.retrieve());
+        DocumentScore documentScore=find_or_createDcoumentScore(w.indexs.retrieve());//o(s)
         documentScore.incress_score(score);
-            if(is_inScorelLinkedList(w.indexs.retrieve()))
-                removeFromScorelLinkedList(index.documents.retrieve().id);
-            documentScore.insertInArrange(scorelLinkedList);
+            if(is_inScorelLinkedList(w.indexs.retrieve()))//o(s)
+                removeFromScorelLinkedList(index.documents.retrieve().id);//o(s)
+            documentScore.insertInArrange(scorelLinkedList);//o(s)
     }
-    display();
+    display();// o(s)
+    //worst: o(n * m) : m=wordIndexs & n = Worsds LinkedList(in invertedindex)
+    //avr: o(n * m) : m=wordIndexs & n = Worsds LinkedList(in invertedindex)
 }
 
-public void indexRanking(String str){// national flag
+public void indexRanking(String str){
     str=str.trim().toLowerCase();
     String words[]=str.split(" ");
 
@@ -95,29 +99,24 @@ public void indexRanking(String str){// national flag
             System.out.println("Empty words are not acceptable.");
             return;
         }
-        if(!index.isExist(word)){
+        if(!index.isExist(word)){//o(n*m)
             System.out.println("'"+word+"'"+" is not exist in the documents.");
             return;
         }
         int score=0;   
-        /*
-         Document 1: "The national flag of the Kingdom of Saudi Arabia color is green and white"
-         Document 2: "The green color extends from the pole to the end of the flag"
-         Document 3: "The bright green color known as emerald green"
-         Document 4: "The flag of Saudi Arabia has an Arabic shahada and a sword in snow white"
-         */
+      
         index.documents.findFirst();
-        while(!index.documents.last()){
+        while(!index.documents.last()){//o(n)
             score=index.documents.retrieve().count_apprence(word);
             if(score==0){
                index.documents.findNext();
                 continue;
                 }
-            DocumentScore documentScore=find_or_createDcoumentScore(index.documents.retrieve().id);
+            DocumentScore documentScore=find_or_createDcoumentScore(index.documents.retrieve().id);//o(s)
             documentScore.incress_score(score);
-                 if(is_inScorelLinkedList(index.documents.retrieve().id))
-                    removeFromScorelLinkedList(index.documents.retrieve().id);
-                    documentScore.insertInArrange(scorelLinkedList) ;      
+                 if(is_inScorelLinkedList(index.documents.retrieve().id))//o(s)
+                    removeFromScorelLinkedList(index.documents.retrieve().id);//o(s)
+                    documentScore.insertInArrange(scorelLinkedList);//o(s)      
             index.documents.findNext();
         }
         score=index.documents.retrieve().count_apprence(word);
@@ -128,9 +127,11 @@ public void indexRanking(String str){// national flag
             removeFromScorelLinkedList(index.documents.retrieve().id);
                 documentScore.insertInArrange(scorelLinkedList)  ;     
     }
-    display();  
+    display();//o(s)
+    //worst: o(n * m ) : m=words & n = document LinkedList(in index)
+    //avr: o(n * m ) : m=words & n = document LinkedList(in index)  
     }
-  public boolean is_inScorelLinkedList(int id){
+  public boolean is_inScorelLinkedList(int id){//o(s)
      if(!scorelLinkedList.empty()){
             scorelLinkedList.findFirst();
             while (!scorelLinkedList.last()) {
@@ -143,7 +144,7 @@ public void indexRanking(String str){// national flag
         }
     return false;
  }
- public DocumentScore find_or_createDcoumentScore(int id){
+ public DocumentScore find_or_createDcoumentScore(int id){ // o(s)
      if(!scorelLinkedList.empty()){
           scorelLinkedList.findFirst();
           while(!scorelLinkedList.last()){
@@ -156,10 +157,10 @@ public void indexRanking(String str){// national flag
      }
      return new DocumentScore(id); 
 }
-public void removeFromScorelLinkedList(int docID){
+public void removeFromScorelLinkedList(int docID){// o(s)
     if(!scorelLinkedList.empty()){
-        scorelLinkedList.findFirst();                //     c
-        while(!scorelLinkedList.last()){             // 5 3 1
+        scorelLinkedList.findFirst();                
+        while(!scorelLinkedList.last()){             
             if(docID==scorelLinkedList.retrieve().docID)
                 scorelLinkedList.remove();
 
@@ -172,7 +173,7 @@ public void removeFromScorelLinkedList(int docID){
         scorelLinkedList.remove();
     }
 }
-public void display(){
+public void display(){//o(s)
     if(!scorelLinkedList.empty()){
         System.out.println("DocID    Score");
         scorelLinkedList.findFirst();
