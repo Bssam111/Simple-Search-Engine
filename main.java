@@ -13,10 +13,10 @@ public static void main(String[] args){
     //System.out.println(iib.bst.findkey("national").retrieve());
     
         //ranking.invertedindexBSTRanking("weather warming");
-        q.IndexQuery("market OR sports");
-     // i.findIndexes("market");
+        q.IndexQuery("market OR sports AND warming");
+      //i.findIndexes("market");
       //System.out.println(i.findIndexes("market"));
-      display(i.findIndexes("warming"));
+     // display(i.findIndexes("warming"));
   //System.out.println(ii.freq(3, "green"));
    // i.print_document(1);
      //q.Query("market OR sports AND warming"); //case 1

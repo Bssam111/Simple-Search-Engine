@@ -98,7 +98,9 @@ public class MainMenu {
     }
 
     private static void printTokensAndVocabulary(Index index) {
+        System.out.println("------------------------------------------------");
         System.out.println("Number of Tokens: " + index.getTokens());
         System.out.println("Number of Vocabulary: " + index.getVocabulary());
+        System.out.println("------------------------------------------------");
     }
 }

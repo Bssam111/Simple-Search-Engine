@@ -14,12 +14,12 @@ public Ranking(Index index,Invertedindex invertedindex, InvertedindexBST inverte
 public void createNewLinkedList(){
     scorelLinkedList =new LinkedList<DocumentScore>();
 }
-public void invertedindexBSTRanking(String str){
-    str=str.trim().toLowerCase();
+public void invertedindexBSTRanking(String str){ // green color
+    str=str.trim().toLowerCase(); 
     String words[]=str.split(" ");
     
     for(String word: words){
-        if(word==""){
+        if(word.isEmpty()){
             System.out.println("Empty words are not acceptable.");
             return;
         }
@@ -28,7 +28,7 @@ public void invertedindexBSTRanking(String str){
             System.out.println("'"+word+"'"+" is not exist in the documents.");
             return;
         }
-        int score=0;
+        int score=0;            // Document 3: "The bright green color known as emerald green"
         wordIndexs.findFirst();
         while (!wordIndexs.last()) {
             score=invertedindexBST.freq(wordIndexs.retrieve(), word);
@@ -86,12 +86,12 @@ public void invertedindexRanking(String str){
     display();
 }
 
-public void indexRanking(String str){
+public void indexRanking(String str){// national flag
     str=str.trim().toLowerCase();
     String words[]=str.split(" ");
 
     for(String word: words){
-        if(word==""){
+        if(word.isEmpty()){
             System.out.println("Empty words are not acceptable.");
             return;
         }
@@ -100,18 +100,24 @@ public void indexRanking(String str){
             return;
         }
         int score=0;   
+        /*
+         Document 1: "The national flag of the Kingdom of Saudi Arabia color is green and white"
+         Document 2: "The green color extends from the pole to the end of the flag"
+         Document 3: "The bright green color known as emerald green"
+         Document 4: "The flag of Saudi Arabia has an Arabic shahada and a sword in snow white"
+         */
         index.documents.findFirst();
         while(!index.documents.last()){
             score=index.documents.retrieve().count_apprence(word);
             if(score==0){
-                index.documents.findNext();
+               index.documents.findNext();
                 continue;
                 }
             DocumentScore documentScore=find_or_createDcoumentScore(index.documents.retrieve().id);
             documentScore.incress_score(score);
                  if(is_inScorelLinkedList(index.documents.retrieve().id))
                     removeFromScorelLinkedList(index.documents.retrieve().id);
-                    documentScore.insertInArrange(scorelLinkedList)  ;      
+                    documentScore.insertInArrange(scorelLinkedList) ;      
             index.documents.findNext();
         }
         score=index.documents.retrieve().count_apprence(word);
@@ -152,11 +158,14 @@ public void indexRanking(String str){
 }
 public void removeFromScorelLinkedList(int docID){
     if(!scorelLinkedList.empty()){
-        scorelLinkedList.findFirst();
-        while(!scorelLinkedList.last()){
+        scorelLinkedList.findFirst();                //     c
+        while(!scorelLinkedList.last()){             // 5 3 1
             if(docID==scorelLinkedList.retrieve().docID)
                 scorelLinkedList.remove();
-            if(scorelLinkedList.last()) return;
+
+            if(scorelLinkedList.last()) 
+                return;
+
             scorelLinkedList.findNext();    
         }
         if(docID==scorelLinkedList.retrieve().docID)

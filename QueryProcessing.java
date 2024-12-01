@@ -8,27 +8,60 @@ private InvertedindexBST invertedindexBST;
      this.invertedindex = invertedindex;
     this.invertedindexBST=invertedindexBST;
  }
- public void IndexQuery(String str){//"color AND green AND white
-    str=str.replace(" ","");
-    String splitingWords[]=str.split("OR");//[market], [sports]
+ public void IndexQuery(String str){
+    str=str.replace(" ","");//greenORshahada
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
+    
+    String splitingWords[]=str.split("OR");// marketORsportsANDwarming
+    //splitingWords=[green,shahada]
     LinkedList<LinkedList<Integer>> indexs=new LinkedList<LinkedList<Integer>>();
-    for(String andString:splitingWords){ // just store in the linked list of linked list of int
-        String[] splitANDs=andString.split("AND");
-        for(String word:splitANDs)
-        indexs.insert(index.findIndexes(word));
+    for(String word:splitingWords){ 
+        if(!word.contains("AND")){
+            orLinkedList.insert(index.findIndexes(word));
+            continue;
+        }
+        String[] splitANDs= word.split("AND");
+        for(String word1:splitANDs)    //market=[12,41,0]
+            indexs.insert(index.findIndexes(word1));
         orLinkedList.insert(Index_ANDQuery(indexs));
         
     }
-   
+
+        //display_listoflist(orLinkedList);
+        
+        
         Query(str,orLinkedList);
  }
+private void display_listoflist(LinkedList<LinkedList<Integer>> orLinkedList) {
+    orLinkedList.findFirst();
+    while (!orLinkedList.last()) {
+        orLinkedList.retrieve().findFirst();
+        while(!orLinkedList.retrieve().last()){
+        System.out.print(orLinkedList.retrieve().retrieve()+",");
+        orLinkedList.retrieve().findNext();
+        }
+        System.out.print(orLinkedList.retrieve().retrieve()+"\n");
+        orLinkedList.findNext();
+    }
+    orLinkedList.retrieve().findFirst();
+    while(!orLinkedList.retrieve().last()){
+    System.out.print(orLinkedList.retrieve().retrieve()+",");
+    orLinkedList.retrieve().findNext();
+    }
+    System.out.print(orLinkedList.retrieve().retrieve()+"\n");
+}
  public void invertedIndexQuery(String str){
     str=str.replace(" ","");
-    String splitingWords[]=str.split("OR");
+    String splitingWords[]=str.split("OR");//color AND green OR white
+    //splitingWords=[colorANDgreenANDwhite]
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
-    for(String andString:splitingWords){ // just store in the linked list of linked list of int
-        String[] splitANDs=andString.split("AND");
+    for(String word:splitingWords){ // just store in the linked list of linked list of int
+        if(!word.contains("AND")){
+            orLinkedList.insert(index.findIndexes(word));
+            continue;
+        }
+        String[] splitANDs=word.split("AND");
+        //splitANDs=[color,green,white]
         orLinkedList.insert(invertedIndex_ANDQuery(splitANDs));
     }
         Query(str,orLinkedList);
@@ -38,8 +71,12 @@ private InvertedindexBST invertedindexBST;
     str=str.replace(" ","");
     String splitingWords[]=str.split("OR");
     LinkedList<LinkedList<Integer>> orLinkedList=new LinkedList<LinkedList<Integer>>();
-    for(String andString:splitingWords){ // just store in the linked list of linked list of int
-        String[] splitANDs=andString.split("AND");
+    for(String word:splitingWords){ // just store in the linked list of linked list of int
+        if(!word.contains("AND")){
+            orLinkedList.insert(index.findIndexes(word));
+            continue;
+        }
+        String[] splitANDs=word.split("AND");
         orLinkedList.insert(BST_ANDQuery(splitANDs));
     }
         Query(str,orLinkedList);
@@ -56,13 +93,19 @@ private InvertedindexBST invertedindexBST;
         displyAllDoc(orquery);
  }
  private LinkedList<Integer> Index_ANDQuery(LinkedList<LinkedList<Integer>> indexs){
-    // if(!isExist(words))// check if the word not exist print message and retuen false
-    //     return null;                                     c
-    if(indexs==null&&indexs.empty()) // 2 4 5
-        return null; 
-    indexs.findFirst();             // l1= 2 4 5, l2=5 4 2
+    indexs.findFirst();             
+    while(!indexs.last()){
+        if(indexs.retrieve()==null||indexs.retrieve().empty())
+            return null;
+            indexs.findNext();
+    }
+    if(indexs.retrieve()==null||indexs.retrieve().empty())
+    return null;
+
+    indexs.findFirst();             
     if(indexs.last()) 
         return indexs.retrieve();
+
     LinkedList<Integer> l1=new LinkedList<Integer>();
     l1=indexs.retrieve();
     LinkedList<Integer> l2=null;
@@ -103,12 +146,13 @@ private LinkedList<Integer> BST_ANDQuery(String[] words){
         
 }
 private LinkedList<Integer> ORQuery(LinkedList<LinkedList<Integer>> indexs){// ORQuery is simply merge the list
+    if(indexs==null||indexs.empty()) return null;
     indexs.findFirst(); // this while to return null if we have null linked list of int in indexs
     while(!indexs.last()){
-    if(indexs.retrieve()==null)
-        return null;
-    indexs.findNext();    
-   }
+        if(indexs.retrieve()==null)
+            return null;
+        indexs.findNext();    
+    }
    if(indexs.retrieve()==null)
         return null;
 
@@ -182,22 +226,28 @@ private LinkedList<Integer> find_intersection(LinkedList<Integer> x, LinkedList<
 }
 private  LinkedList<Integer> merge(LinkedList<Integer> x, LinkedList<Integer> y){// simple method just merger to set like if we have {1,5,6,8} and {5,9,4,1} we get {1,5,6,8,9,4} ( merge without duplication )
     LinkedList<Integer> merge=new LinkedList<Integer>();
-    x.findFirst();
-    while(!x.empty()&&!x.last()){
+    if(x==null||y==null) return null;
+    if(!x.empty()){
+        x.findFirst();
+        while(!x.last()){
+            merge.insert(x.retrieve());
+            x.findNext();
+        }
         merge.insert(x.retrieve());
-        x.findNext();
-    }
-    merge.insert(x.retrieve());
+     }
     if(merge.empty()) return y;
-    y.findFirst();
-  while(!y.empty()&&!y.last()){
-    if(!inList(merge, y.retrieve()))
-    merge.insert(y.retrieve());
-    y.findNext();
-  }
-  if(!inList(merge, y.retrieve()))
-  merge.insert(y.retrieve());
-return merge;
+
+    if(!y.empty()){
+        y.findFirst();
+        while(!y.empty()&&!y.last()){
+            if(!inList(merge, y.retrieve()))
+                merge.insert(y.retrieve());
+            y.findNext();
+        }
+        if(!inList(merge, y.retrieve()))
+            merge.insert(y.retrieve());
+    }
+    return merge;
 }
 private  boolean inList(LinkedList<Integer> l,Integer i){// return true if the element in the linked list otherwise return false
     if(l!=null&&!l.empty()){ 
@@ -238,13 +288,9 @@ public static void main(String[] args) {
     l2.insert(5);l2.insert(4);l2.insert(2);
     l3.insert(1);l3.insert(5);l3.insert(4);l3.insert(2);
     l.insert(l1); l.insert(l2); l.insert(l3);
-    LinkedList<Integer> ll =q.Index_ANDQuery(l);
+    //LinkedList<Integer> ll =q.Index_ANDQuery(l);
 
-    ll.findFirst();
-    while (!ll.last()) {
-        System.out.print(ll.retrieve()+" ");
-        ll.findNext();
-    }
-    System.out.println(ll.retrieve());
+   
+    q.display_listoflist(l);
 }
 }
